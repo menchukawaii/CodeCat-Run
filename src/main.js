@@ -9,7 +9,7 @@ loadSprite("cat", "sprites/cat1.png");
 
 scene("game", () => {
     setGravity(1600);
-    
+
     const cat = add([
         sprite("cat"),
         pos(120, 40),
@@ -23,7 +23,7 @@ scene("game", () => {
             cat.jump();
         }
     });
-    
+
     const platflorm = add([
         rect(width(), 48),
         pos(0, height() - 48),
@@ -48,7 +48,7 @@ scene("game", () => {
             spawnTree();
         });
     }
-    
+
     spawnTree();
 
     cat.onCollide("tree", () => {
@@ -56,6 +56,15 @@ scene("game", () => {
         shake();
         go("lose");
     });
+
+    let score = 0;
+    const scoreLabel = add([text(score), pos(24, 24)]);
+    
+    // increment score every frame
+    onUpdate(() => {
+        score++;
+        scoreLabel.text = score;
+    })
 
 });
 
