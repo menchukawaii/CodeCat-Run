@@ -2,6 +2,11 @@
 - An endless running game about a cute cat that jumps over programming stuff.
 - Made with Kaplay https://kaplayjs.com
 
+## To Do
+- Show the character cat
+- Add the floor and the gravity so the cat rests in the floor
+- Add the obstacles
+
 # Folder structure
 
 - `src` - source code for your kaplay project

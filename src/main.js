@@ -1,11 +1,61 @@
 import kaplay from "kaplay";
 // import "kaplay/global"; // uncomment if you want to use without the k. prefix
 
-const k = kaplay();
+kaplay();
 
-k.loadRoot("./"); // A good idea for Itch.io publishing later
-k.loadSprite("bean", "sprites/bean.png");
+loadRoot("./"); // A good idea for Itch.io publishing later
 
-k.add([k.pos(120, 80), k.sprite("bean")]);
+loadSprite("cat", "sprites/cat1.png");
 
-k.onClick(() => k.addKaboom(k.mousePos()));
+scene("game", () => {
+    setGravity(1600);
+    
+    const cat = add([
+        sprite("cat"),
+        pos(120, 40),
+        scale(0.25),
+        area(),
+        body()
+    ]);
+
+    onKeyPress("space", () => {
+        if (cat.isGrounded()) {
+            cat.jump();
+        }
+    });
+    
+    const platflorm = add([
+        rect(width(), 48),
+        pos(0, height() - 48),
+        outline(4),
+        area(),
+        body({ isStatic: true }),
+        color(127, 200, 255),
+    ]);
+
+    function spawnTree() {
+        add([
+            rect(48, rand(24, 64)),
+            area(),
+            outline(4),
+            pos(width(), height() - 48),
+            anchor("botleft"),
+            color(255, 180, 255),
+            move(LEFT, 240),
+            "tree", // add a tag here
+        ]);
+        wait(rand(0.5, 1.5), () => {
+            spawnTree();
+        });
+    }
+    
+    spawnTree();
+
+    cat.onCollide("tree", () => {
+        addKaboom(cat.pos);
+        shake();
+    });
+
+});
+
+go("game");
