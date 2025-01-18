@@ -54,8 +54,13 @@ scene("game", () => {
     cat.onCollide("tree", () => {
         addKaboom(cat.pos);
         shake();
+        go("lose");
     });
 
+});
+
+scene("lose", () => {
+    add([text("Game Over"), pos(center()), anchor("center")]);
 });
 
 go("game");
